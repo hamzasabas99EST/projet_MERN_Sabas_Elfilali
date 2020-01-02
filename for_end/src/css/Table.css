@@ -1,0 +1,14 @@
+table th {
+    text-align: center; 
+ }
+ 
+ .limam{
+    display: block;
+    flex-wrap: wrap;
+    margin-left: 400px;
+}
+h1{
+    font-family : "Times New Roman", Times, serif;
+}
+ 
+ 

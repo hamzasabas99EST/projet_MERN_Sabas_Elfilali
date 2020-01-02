@@ -1,0 +1,83 @@
+import React, { Component } from 'react'
+import axios from 'axios';
+import {Link}  from 'react-router-dom'
+import Search from '../Search'
+
+export class ListStudent extends Component {
+    
+    constructor(props){ 
+        super(props);
+        this.deleteStudent=this.deleteStudent.bind(this);
+        
+        this.state={
+            students:[]
+        }
+     }
+    componentDidMount(){
+        axios.get('http://localhost:3017/students/listStudent/'+this.props.match.params.nomFiliere)
+        .then(reponse=>{
+            this.setState({students:reponse.data})
+        })
+     
+        }
+    deleteStudent(id){
+        axios.delete('http://localhost:3017/students/delete/'+id)
+        .then(res=>console.log(res.data));
+
+        this.setState({
+            students:this.state.students.filter(el=>el._id!==id)
+        })
+    
+    } 
+
+    searchStudentForm=(val)=>{
+        if(val!== ''){
+        axios.get('http://localhost:3017/students/searchStudent/'+val+'/'+this.props.match.params.nomFiliere)
+        .then(reponse=>{
+            this.setState({students:reponse.data})
+        })
+        }
+    }
+  
+    render() {
+        return (
+
+            
+            <div className="">
+                      <h1>Liste des étudiants de {this.props.match.params.nomFiliere}</h1>
+                <div className="row ">
+                    <div className="col-md-2 mx-auto"> 
+                        <Search  getStudentSearch={this.searchStudentForm}/>
+                    </div>
+                 </div><br></br>
+                <div className="">
+               <table className="table table-striped table-inverse table-responsive col-ms-12">
+                   <thead className="thead-inverse">
+                       <tr>
+                           <th>CIN</th>
+                           <th>CNE</th>
+                           <th>Nom</th>
+                           <th>Prénom</th>
+                           <th>Date de Naissance</th>
+                       </tr>
+                       </thead>
+                       <tbody>
+                           {this.state.students.map(student=>(
+                             <tr key={student._id}>
+                                 <td>{student.cin}</td>
+                                 <td>{student.cne}</td>
+                                 <td>{student.nom}</td>
+                                 <td>{student.prenom }</td>
+                                 <td>{String(student.date_n).substring(0,10)}</td>
+                                <td> <Link className='btn btn-primary ' to={"/edit/"+student._id} >Edit</Link>  |     <button className="btn  btn-danger btn-xs" onClick={()=>this.deleteStudent(student._id)}>Delete</button>   </td>
+                            </tr>
+                           ))}
+                       </tbody>
+               </table>
+               </div>
+            </div>
+        )
+    }
+}
+
+export default ListStudent
