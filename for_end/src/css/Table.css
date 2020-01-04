@@ -1,14 +1,32 @@
 table th {
-    text-align: center; 
+    text-align: center;
+    margin-left: 20%;
+    
  }
  
- .limam{
+ .table{
     display: block;
     flex-wrap: wrap;
-    margin-left: 400px;
+    margin-left: 30%;
 }
 h1{
     font-family : "Times New Roman", Times, serif;
+    margin-left: 0%;
+
+}
+
+.title{
+    margin-left:35%
+}
+
+button {
+
+    margin-left: 70%;
+    margin-bottom: 5%;
+}
+
+.search{
+    margin-left:45%
 }
  
  

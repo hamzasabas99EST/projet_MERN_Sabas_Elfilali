@@ -1,20 +1,16 @@
 import React, { Component } from 'react'
-import '../css/sidebar.css';
+import Navbar from '../Component/Navbar';
 
-import SideBar from '../Component/SideBar';
+class dashboard extends Component {
 
- class dashboard extends Component {
-
-    componentDidMount(){
-     //   this.props.ChangeNavbar;
-        }
-            
-        
-    render() {
+     
+     render() {
+       // if(this.props.flag) return null
         return (
            
             <div>
-                 <SideBar/>
+                <Navbar/>
+            
             </div>
            
         )

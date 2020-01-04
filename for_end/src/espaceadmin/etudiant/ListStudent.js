@@ -2,24 +2,40 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import {Link}  from 'react-router-dom'
 import Search from '../Search'
+import '../../css/Table.css';
+import Dashboard from '../Dashboard';
+
 
 export class ListStudent extends Component {
     
     constructor(props){ 
         super(props);
         this.deleteStudent=this.deleteStudent.bind(this);
-        
+        this.listStudents=this.listStudents.bind(this)
         this.state={
             students:[]
         }
      }
     componentDidMount(){
-        axios.get('http://localhost:3017/students/listStudent/'+this.props.match.params.nomFiliere)
+       
+        this.listStudents(this.props.match.params.nomFiliere);
+        }
+
+    listStudents=(filier)=>{
+        
+        axios.get('http://localhost:3017/students/listStudent/'+filier)
         .then(reponse=>{
             this.setState({students:reponse.data})
         })
-     
+    }
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.match.params.nomFiliere !== this.props.match.params.nomFiliere) {
+            const nomFiliere = nextProps.match.params.nomFiliere
+            this.listStudents( nomFiliere );
         }
+        }
+         
+
     deleteStudent(id){
         axios.delete('http://localhost:3017/students/delete/'+id)
         .then(res=>console.log(res.data));
@@ -36,17 +52,19 @@ export class ListStudent extends Component {
         .then(reponse=>{
             this.setState({students:reponse.data})
         })
-        }
+        }else return this.setState({students: this.state.students})
+
     }
   
     render() {
+      //  const filier =this.props.match.params.nomFiliere
         return (
 
-            
             <div className="">
-                      <h1>Liste des étudiants de {this.props.match.params.nomFiliere}</h1>
+            <Dashboard/>
+                      <h1 className='title'>Liste des étudiants de {this.props.match.params.nomFiliere}</h1>
                 <div className="row ">
-                    <div className="col-md-2 mx-auto"> 
+                    <div className="search"> 
                         <Search  getStudentSearch={this.searchStudentForm}/>
                     </div>
                  </div><br></br>
@@ -69,7 +87,7 @@ export class ListStudent extends Component {
                                  <td>{student.nom}</td>
                                  <td>{student.prenom }</td>
                                  <td>{String(student.date_n).substring(0,10)}</td>
-                                <td> <Link className='btn btn-primary ' to={"/edit/"+student._id} >Edit</Link>  |     <button className="btn  btn-danger btn-xs" onClick={()=>this.deleteStudent(student._id)}>Delete</button>   </td>
+                                  <td> <Link className='btn btn-primary ' to={"/edit/"+student._id} >Edit</Link>  | <Link to="#" className="btn  btn-danger btn-xs" onClick={()=>this.deleteStudent(student._id)}>Delete</Link>   </td>
                             </tr>
                            ))}
                        </tbody>

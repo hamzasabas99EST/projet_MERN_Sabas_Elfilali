@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import DatePiker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import '../../css/Table.css';
 
 export class EditStudent extends Component {
 
@@ -84,8 +85,7 @@ export class EditStudent extends Component {
 
 
     onSubmit=(e)=>{
-        e.preventDefault();
-
+        
         const student={
             cin:this.state.cin,
             cne:this.state.cne,
@@ -99,32 +99,36 @@ export class EditStudent extends Component {
         axios.post(`http://localhost:3017/students/update/`+this.props.match.params.id,student)
         .then(res=>console.log(res.data))
         .catch(err=>console.log(err));
-        window.location='/ListEtudiant/'+student.nomFiliere;
-
+        window.location='/ListEtudiant/'+this.state.nomFiliere;
     }
     render() {
         return (
             <div>
-                <h1><center>Modifier Info de  {this.state.nom} { this.state.prenom}</center></h1>
+                <h1><center>Modifier Info de  {this.state.nom} { this.state.prenom}</center></h1><br/><br/>
                 <div className="container">
                 <form onSubmit={this.onSubmit} >
-                        <div className="form-group">
+                        <div className="row">
+                        <div className="col">
                           <label ><strong>CIN</strong></label>
-                          <input type="text"  className="form-control" disabled  value={this.state.cin} onChange={this.onChangeCin} placeholder=""/>
+                          <input type="text" disabled  className="form-control"  value={this.state.cin} onChange={this.onChangeCin} placeholder=""/>
                         </div>
-                        <div className="form-group">
+                        <div className="col">
                           <label ><strong>CNE</strong></label>
-                          <input type="text"  className="form-control" disabled value={this.state.cne} onChange={this.onChangeCne} placeholder=""/>
+                          <input type="text" disabled  className="form-control"  value={this.state.cne} onChange={this.onChangeCne} placeholder=""/>
                         </div>
-                        <div className="form-group">
+                        </div>
+                        <div className="row">
+                        <div className="col">
                           <label ><strong>Prénom</strong></label>
                           <input type="text"  className="form-control"  value={this.state.prenom} onChange={this.onChangePrenom} placeholder=""/>
                         </div>
-                        <div className="form-group">
+                        <div className="col">
                           <label ><strong>Nom</strong></label>
                           <input type="text"  className="form-control"  value={this.state.nom} onChange={this.onChangeNom} placeholder=""/>
                         </div>
-                        <div className="form-group">
+                        </div>
+                        <div className="row">
+                        <div className="col">
                           <label ><strong>Filiere</strong></label>
                           <select  className="form-control"  value={this.state.nomFiliere}  onChange={this.onChangeNomFiliere}>
                               {this.state.filieres.map(filiere=>(
@@ -132,13 +136,14 @@ export class EditStudent extends Component {
                               ))}
                           </select>
                         </div>
-                        <div className="form-group">
+                        <div className="col">
                           <label ><strong>Date de Naissance</strong></label>
                           <div>
                             <DatePiker className="form-control" disabled selected={this.state.date_n} value={this.state.date_n} onChange={this.onChangeDateNaissance}></DatePiker>
                          </div>
-                        </div>
-                        <button type="submit" className="btn btn-primary col-3">Modifier</button>
+                         </div>
+                        </div><br/><br/>
+                        <button type="submit" className="btn btn-primary col-2">Modifier</button>
                     </form>
                 </div>
             </div>

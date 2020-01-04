@@ -4,6 +4,7 @@ import DatePiker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../../css/Table.css';
 import etudiant from '../../etudiant.png'
+import Dashboard from '../Dashboard';
 
 export class AddStudent extends Component {
 
@@ -87,12 +88,13 @@ export class AddStudent extends Component {
         axios.post('http://localhost:3017/students/add',student)
         .then(res=>console.log(res.data))
         .catch(err=>console.log(err));
-        window.location='/ListEtudiant'+this.state.nomFiliere;
+        window.location='/ListEtudiant/'+this.state.nomFiliere;
     }
     
     render() {
         return (
             <div>
+                <Dashboard/>
                 <center><img class="img-fluid profile-img-card" src={etudiant} alt=''/><h1>Ajouter Nouveau Etudiant</h1></center>
             <br/><br/><br/>
                 <div className="container">
