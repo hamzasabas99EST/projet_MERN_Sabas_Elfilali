@@ -57,12 +57,12 @@ router.route('/delete/:id').delete((req,res)=>{
 router.route('/update/:id').post((req,res)=>{
    Student.findById(req.params.id)
    .then(student=>{
-   student.cin=req.body.cin;
-   student.cne=req.body.cne;
-   student.prenom=req.body.prenom;
-   student.nom=req.body.nom;
-   student.date_n=req.body.date_n;
-   student.nomFiliere=req.body.nomFiliere;
+      student.cin=req.body.cin;
+      student.cne=req.body.cne;
+      student.prenom=req.body.prenom;
+      student.nom=req.body.nom;
+      student.date_n=req.body.date_n;
+      student.nomFiliere=req.body.nomFiliere;
 
    student.save()
    .then(()=>res.json('Student updated'))

@@ -23,7 +23,7 @@ router.route('/add').post((req,res)=>{
 });
 
 
-router.route('/login/').post((req,res)=>{
+router.route('/login').post((req,res)=>{
     
 Admin.find({$and:[{'username':req.body.username},{'password':req.body.password}]})
 .then(login=>res.send(login))
@@ -35,25 +35,6 @@ Admin.find({$and:[{'username':req.body.username},{'password':req.body.password}]
         
 
 
-/*
- 
- router.route('/delete/:id').get((req,res)=>{
-    Filiere.findByIdAndDelete(req.params.id)
-    .then(filiere=>res.json("Is deletet"))
-    .catch(err=>res.status(400).json('Error'+err));
- });
- 
- router.route('/updated/:id').post((req,res)=>{
-    Filiere.findById(req.params.id)
-    .then(filiere=>{
-    filiere.nomFiliere=req.body.nomFiliere;
-    
- 
-    student.save()
-    .then(()=>res.json('Filiere updated'))
-    .catch(err=>res.status(400).json('Error'+err));
- })
- });
-*/
+
 
 module.exports=router
