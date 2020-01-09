@@ -3,7 +3,7 @@ import axios from 'axios';
 import DatePiker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../../css/Table.css';
-import etudiant from '../../etudiant.png'
+import etudiant from '../../images/etudiant.png'
 import { withRouter } from 'react-router-dom';
 
 

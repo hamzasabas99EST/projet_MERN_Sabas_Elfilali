@@ -52,7 +52,7 @@ import '../../css/Table.css';
         .then(reponse=>{
             this.setState({students:reponse.data})
         })
-        }else return this.setState({students: this.state.students})
+        }else  this.setState({students: this.state.students})
 
     }
   

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Logo from '../Logo.jpg';
+import Logo from '../images/Logo.jpg';
 import '../css/Login.css';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
