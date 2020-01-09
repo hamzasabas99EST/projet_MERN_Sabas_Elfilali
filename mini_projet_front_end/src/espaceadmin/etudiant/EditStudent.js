@@ -3,12 +3,13 @@ import axios from 'axios';
 import DatePiker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../../css/Table.css';
-import etudiant from '../../etudiant.png'
-import Dashboard from '../Dashboard';
+import etudiant from '../../etudiant.png';
+import { withRouter } from 'react-router-dom';
 
-export class AddStudent extends Component {
 
-   constructor(props){ 
+ class EditStudent extends Component {
+
+  constructor(props){ 
     super(props);
     this.onChangeCin=this.onChangeCin.bind(this);
     this.onChangeCne=this.onChangeCne.bind(this);
@@ -29,15 +30,28 @@ export class AddStudent extends Component {
     }
 
     componentDidMount(){
-        axios.get('http://localhost:3017/filieres/')
+        
+      axios.get(`http://localhost:3017/students/`+this.props.match.params.id)
+      .then(res=>
+      this.setState({
+        cin:res.data.cin,
+        cne:res.data.cne,
+        prenom:res.data.prenom,
+        nom:res.data.nom ,
+        nomFiliere:res.data.nomFiliere,
+        date_n:new Date(res.data.date_n), 
+      }))
+      .catch(err=>console.log(err));
+      
+      axios.get('http://localhost:3017/filieres/')
         .then(reponse=>{
+            if(reponse.data.length>0){
             this.setState({
                 filieres:reponse.data.map(filiere=>filiere.nomFiliere),
-                nomFiliere:reponse.data[0].nomFiliere
+                
             })
+        }
         })
-     
-        
     }
     onChangeCin=(e)=>{
         this.setState({
@@ -72,6 +86,7 @@ export class AddStudent extends Component {
         })
     }
 
+
     onSubmit=(e)=>{
         e.preventDefault();
 
@@ -81,24 +96,28 @@ export class AddStudent extends Component {
             prenom:this.state.prenom,
             nom:this.state.nom,
             nomFiliere:this.state.nomFiliere,
-            date_n:this.state.date_n
+            date_n:this.state.date_n,
         }
 
         console.log(student);
-        axios.post('http://localhost:3017/students/add',student)
-        .then(res=>console.log(res.data))
+        axios.post(`http://localhost:3017/students/update/`+this.props.match.params.id,student)
+        .then(res=>{
+            if(res.data){
+                this.props.history.push('/ListEtudiant/'+student.nomFiliere) 
+            }
+        })
         .catch(err=>console.log(err));
-        window.location='/ListEtudiant/'+this.state.nomFiliere;
+      
+
     }
-    
     render() {
         return (
             <div>
-                <Dashboard/>
-                <center><img class="img-fluid profile-img-card" src={etudiant} alt=''/><h1>Ajouter Nouveau Etudiant</h1></center>
-            <br/><br/><br/>
+                
+                <center><img className="img-fluid profile-img-card" src={etudiant} alt=''/><h1>Modifier Info de  {this.state.nom} { this.state.prenom}</h1></center>
+
                 <div className="container">
-                    <form onSubmit={this.onSubmit}>
+                <form onSubmit={this.onSubmit}>
                         <div className="row">
                         <div className="col">
                           <label ><strong>CIN</strong></label>
@@ -122,7 +141,7 @@ export class AddStudent extends Component {
                         <div className="row">
                         <div className="col">
                           <label ><strong>Filiere</strong></label>
-                          <select  className="form-control" value={this.state.nomFiliere} onChange={this.onChangeNomFiliere} >
+                          <select  disabled className="form-control" value={this.state.nomFiliere} onChange={this.onChangeNomFiliere} >
                               {this.state.filieres.map(filiere=>(
                                   <option key={filiere} value={filiere} >{filiere}</option>
                               ))}
@@ -131,11 +150,11 @@ export class AddStudent extends Component {
                         <div className="col">
                           <label ><strong>Date de Naissance</strong></label>
                           <div>
-                              <DatePiker className="form-control" selected={this.state.date_n} value={this.state.date_n} onChange={this.onChangeDateNaissance}></DatePiker>
+                              <DatePiker className="form-control" disabled selected={this.state.date_n} value={this.state.date_n} onChange={this.onChangeDateNaissance}></DatePiker>
                           </div>
                         </div>
                         </div><br/><br/>
-                        <button type="submit" className="btn btn-primary col-2">Ajouter</button>
+                        <button type="submit" className="btn btn-primary col-2">Modifier</button>
                     </form>
                 </div>
             </div>
@@ -143,4 +162,4 @@ export class AddStudent extends Component {
     }
 }
 
-export default AddStudent
+export default withRouter(EditStudent)

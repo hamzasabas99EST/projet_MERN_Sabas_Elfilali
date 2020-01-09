@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
-import Navbar from '../Component/Navbar';
 
 class dashboard extends Component {
 
      
      render() {
-       // if(this.props.flag) return null
+        const username=localStorage.getItem('LogIn') ;
         return (
            
             <div>
-                <Navbar/>
+                
+               <h1> Bienvenu sur votre espace Monsieur  {username}</h1>
             
             </div>
            

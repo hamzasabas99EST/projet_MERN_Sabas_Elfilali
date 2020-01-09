@@ -14,34 +14,45 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    //this.handleChangeNavbar = this.handleChangeNavbar.bind(this);
-    this.state={
-        IsLogin :''
+   
+    this.TestDeconnection=this.TestDeconnection.bind(this);
+    this.handleLoggedIn=this.handleLoggedIn.bind(this);
+   this.state={
+       LoggedIn :false
+        
+        
   }
   }
   
-  testLoginChick=(val)=>{
+  
+  
+  handleLoggedIn=()=>{
     this.setState({
-      IsLogin:false
+      LoggedIn:true
     })
   }
-
   
+  TestDeconnection=()=>{
+    this.setState({
+      LoggedIn:false
+    })
+   // localStorage.clear();
 
-
+  }
+  
   render() {
   return (
        <Router>
     <div className="App">
-         
-         
+
+          {/*localStorage.getItem('LogIn')*/ this.state.LoggedIn  && <Navbar deconnect={this.TestDeconnection}/>}
         <Switch>
-            <Route exact  path='/' component={Admin}/> 
-            <Route   path='/Dashboard' component={Dashboard}/> 
+            <Route  exact path='/' component={()=><Admin setLoggedIn={this.handleLoggedIn}/>}/>
+            <Route   path='/Dashboard' component={Dashboard }/> 
             <Route   path='/AddEtudiant' component={AddStudent} />
             <Route   path='/ListEtudiant/:nomFiliere' component={ListStudent} />
             <Route   path='/edit/:id' component={EditStudent} />
-            <Route  component={NotFound}></Route>
+            <Route component={NotFound}/> 
         </Switch>
     
     </div>  

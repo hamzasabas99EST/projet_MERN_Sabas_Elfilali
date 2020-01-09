@@ -3,10 +3,10 @@ import axios from 'axios';
 import {Link}  from 'react-router-dom'
 import Search from '../Search'
 import '../../css/Table.css';
-import Dashboard from '../Dashboard';
 
 
-export class ListStudent extends Component {
+
+ class ListStudent extends Component {
     
     constructor(props){ 
         super(props);
@@ -21,14 +21,14 @@ export class ListStudent extends Component {
         this.listStudents(this.props.match.params.nomFiliere);
         }
 
-    listStudents=(filier)=>{
+    listStudents=(filliere)=>{
         
-        axios.get('http://localhost:3017/students/listStudent/'+filier)
+        axios.get('http://localhost:3017/students/listStudent/'+filliere)
         .then(reponse=>{
             this.setState({students:reponse.data})
         })
     }
-    componentWillReceiveProps(nextProps) {
+    componentWillUpdate(nextProps) {
         if (nextProps.match.params.nomFiliere !== this.props.match.params.nomFiliere) {
             const nomFiliere = nextProps.match.params.nomFiliere
             this.listStudents( nomFiliere );
@@ -57,11 +57,12 @@ export class ListStudent extends Component {
     }
   
     render() {
-      //  const filier =this.props.match.params.nomFiliere
+     
         return (
 
             <div className="">
-            <Dashboard/>
+           
+           
                       <h1 className='title'>Liste des étudiants de {this.props.match.params.nomFiliere}</h1>
                 <div className="row ">
                     <div className="search"> 
@@ -87,7 +88,7 @@ export class ListStudent extends Component {
                                  <td>{student.nom}</td>
                                  <td>{student.prenom }</td>
                                  <td>{String(student.date_n).substring(0,10)}</td>
-                                  <td> <Link className='btn btn-primary ' to={"/edit/"+student._id} >Edit</Link>  | <Link to="#" className="btn  btn-danger btn-xs" onClick={()=>this.deleteStudent(student._id)}>Delete</Link>   </td>
+                                <td> <Link className='btn btn-primary ' to={"/edit/"+student._id} >Edit</Link>  | <Link to="#" className="btn  btn-danger btn-xs" onClick={()=>this.deleteStudent(student._id)}>Delete</Link>   </td>
                             </tr>
                            ))}
                        </tbody>
