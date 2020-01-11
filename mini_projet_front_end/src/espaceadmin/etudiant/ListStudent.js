@@ -17,24 +17,24 @@ import '../../css/Table.css';
         }
      }
     componentDidMount(){
-       
-        this.listStudents(this.props.match.params.nomFiliere);
+        this.listStudents();
+        
         }
 
-    listStudents=(filliere)=>{
+    listStudents=()=>{
         
-        axios.get('http://localhost:3017/students/listStudent/'+filliere)
+        axios.get('http://localhost:3017/students/all/')
         .then(reponse=>{
             this.setState({students:reponse.data})
         })
     }
-    componentWillUpdate(nextProps) {
+   /* componentWillUpdate(nextProps) {
         if (nextProps.match.params.nomFiliere !== this.props.match.params.nomFiliere) {
             const nomFiliere = nextProps.match.params.nomFiliere
             this.listStudents( nomFiliere );
         }
         }
-         
+    */     
 
     deleteStudent(id){
         axios.delete('http://localhost:3017/students/delete/'+id)
@@ -47,12 +47,12 @@ import '../../css/Table.css';
     } 
 
     searchStudentForm=(val)=>{
-        if(val!== ''){
-        axios.get('http://localhost:3017/students/searchStudent/'+val+'/'+this.props.match.params.nomFiliere)
+        if(val!== 'Tous les fillieres'){
+        axios.get('http://localhost:3017/students/searchStudent/'+val)
         .then(reponse=>{
             this.setState({students:reponse.data})
         })
-        }else  this.setState({students: this.state.students})
+        }else this.listStudents();
 
     }
   
@@ -63,7 +63,7 @@ import '../../css/Table.css';
             <div className="">
            
            
-                      <h1 className='title'>Liste des étudiants de {this.props.match.params.nomFiliere}</h1>
+                      <h1 className='title'>Liste des étudiants </h1>
                 <div className="row ">
                     <div className="search"> 
                         <Search  getStudentSearch={this.searchStudentForm}/>
@@ -73,6 +73,7 @@ import '../../css/Table.css';
                <table className="table table-striped table-inverse table-responsive col-ms-12">
                    <thead className="thead-inverse">
                        <tr>
+                           <th>Filiere</th>
                            <th>CIN</th>
                            <th>CNE</th>
                            <th>Nom</th>
@@ -83,6 +84,7 @@ import '../../css/Table.css';
                        <tbody>
                            {this.state.students.map(student=>(
                              <tr key={student._id}>
+                                 <td>{student.nomFiliere }</td>
                                  <td>{student.cin}</td>
                                  <td>{student.cne}</td>
                                  <td>{student.nom}</td>

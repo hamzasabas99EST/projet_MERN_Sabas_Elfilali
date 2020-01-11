@@ -103,7 +103,7 @@ import { withRouter } from 'react-router-dom';
         axios.post(`http://localhost:3017/students/update/`+this.props.match.params.id,student)
         .then(res=>{
             if(res.data){
-                this.props.history.push('/ListEtudiant/'+student.nomFiliere) 
+                this.props.history.push('/ListEtudiant/'/*+student.nomFiliere*/) 
             }
         })
         .catch(err=>console.log(err));
@@ -121,27 +121,27 @@ import { withRouter } from 'react-router-dom';
                         <div className="row">
                         <div className="col">
                           <label ><strong>CIN</strong></label>
-                          <input type="text"  className="form-control"  value={this.state.cin} onChange={this.onChangeCin} placeholder=""/>
+                          <input type="text"  className="form-control"  value={this.state.cin} onChange={this.onChangeCin} placeholder=""  required/>
                         </div>
                         <div className="col">
                           <label ><strong>CNE</strong></label>
-                          <input type="text"  className="form-control"  value={this.state.cne} onChange={this.onChangeCne} placeholder=""/>
+                          <input type="text"  className="form-control"  value={this.state.cne} onChange={this.onChangeCne} placeholder="" required/>
                         </div>
                         </div>
                         <div className="row">
                             <div className="col">
                           <label ><strong>Prenom</strong></label>
-                          <input type="text"  className="form-control"  value={this.state.prenom} onChange={this.onChangePrenom} placeholder=""/>
+                          <input type="text"  className="form-control"  value={this.state.prenom} onChange={this.onChangePrenom} placeholder="" required/>
                         </div>
                         <div className="col">
                           <label ><strong>Nom</strong></label>
-                          <input type="text"  className="form-control"  value={this.state.nom} onChange={this.onChangeNom} placeholder=""/>
+                          <input type="text"  className="form-control"  value={this.state.nom} onChange={this.onChangeNom} placeholder="" required/>
                         </div>
                         </div>
                         <div className="row">
                         <div className="col">
                           <label ><strong>Filiere</strong></label>
-                          <select  disabled className="form-control" value={this.state.nomFiliere} onChange={this.onChangeNomFiliere} >
+                          <select   className="form-control" value={this.state.nomFiliere} onChange={this.onChangeNomFiliere} >
                               {this.state.filieres.map(filiere=>(
                                   <option key={filiere} value={filiere} >{filiere}</option>
                               ))}
@@ -150,7 +150,7 @@ import { withRouter } from 'react-router-dom';
                         <div className="col">
                           <label ><strong>Date de Naissance</strong></label>
                           <div>
-                              <DatePiker className="form-control" disabled selected={this.state.date_n} value={this.state.date_n} onChange={this.onChangeDateNaissance}></DatePiker>
+                              <DatePiker className="form-control" disabled selected={this.state.date_n} value={this.state.date_n} onChange={this.onChangeDateNaissance} required></DatePiker>
                           </div>
                         </div>
                         </div><br/><br/>

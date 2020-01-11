@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import {Link} from 'react-router-dom';
-import axios from "axios";
+//import axios from "axios";
 
 
 
 
 class Navbar extends Component {
   
-  constructor(props){
+  /*constructor(props){
     super(props)
     this.state={
         filieres:[]
@@ -22,15 +22,11 @@ componentDidMount(){
         this.setState({filieres:reponse.data})
       
     })
+  }    
+*/
 
-
-
-    
- 
 
   
- }    
-
 render() {
 
   return (
@@ -47,15 +43,21 @@ render() {
                     <li className="nav-item">
                         <Link  className="nav-link" to="/Dashboard">Home <span className="sr-only">(current)</span></Link >
                     </li>
-                    <li className="nav-item">
-                         <Link to='/AddEtudiant'className='nav-link'> Ajouter Etudiant </Link>
+                    
+                    <li className="nav-item dropdown" >
+                    <Link className="nav-link dropdown-toggle" to='#' id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Etudiant </Link>
+                        <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                             <Link  className='dropdown-item'to={`/ListEtudiant/`}>Liste des étudiants</Link>
+                             <Link to='/AddEtudiant'className='dropdown-item'> Ajouter Etudiant </Link>
+
+                      </div>    
                     </li>
                     <li className="nav-item dropdown" >
-                    <Link className="nav-link dropdown-toggle" to='#' id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">List des Etudiants </Link>
+                    <Link className="nav-link dropdown-toggle" to='#' id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Filliere </Link>
                         <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                        {this.state.filieres.map(filiere=>(
-                             <Link key={filiere._id} className='dropdown-item'to={`/ListEtudiant/`+filiere.nomFiliere}>{filiere.nomFiliere}</Link>
-                         ))}
+                             <Link  className='dropdown-item'to={`/ListFilliere/`}>Liste des filieres</Link>
+                             <Link to='/AddFilliere'className='dropdown-item'> Ajouter Filliere </Link>
+
                       </div>    
                     </li>
                     <li> <Link className='nav-link' to='/'  onClick={this.props.deconnect}>Déconnecter</Link> </li>

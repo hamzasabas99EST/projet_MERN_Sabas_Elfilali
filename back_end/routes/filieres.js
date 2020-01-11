@@ -8,11 +8,13 @@ router.route('/').get((req,res)=>{
 })
 
 router.route('/add').post((req,res)=>{
-    const nomFiliere=req.body.nomFiliere;
+   const nomFiliere=req.body.nomFiliere;
+   const libelle=req.body.libelle;
     
 
     const newFiliere=new Filiere({
-       nomFiliere
+       nomFiliere,
+       libelle,
     });
 
     newFiliere.save()
@@ -27,19 +29,20 @@ router.route('/add').post((req,res)=>{
     .catch(err=>res.status(400).json('Error'+err));
  });
  
- router.route('/delete/:id').get((req,res)=>{
+ router.route('/delete/:id').delete((req,res)=>{
     Filiere.findByIdAndDelete(req.params.id)
     .then(filiere=>res.json("Is deletet"))
     .catch(err=>res.status(400).json('Error'+err));
  });
  
- router.route('/updated/:id').post((req,res)=>{
+ router.route('/update/:id').post((req,res)=>{
     Filiere.findById(req.params.id)
     .then(filiere=>{
     filiere.nomFiliere=req.body.nomFiliere;
+    filiere.libelle=req.body.libelle;
     
  
-    student.save()
+    filiere.save()
     .then(()=>res.json('Filiere updated'))
     .catch(err=>res.status(400).json('Error'+err));
  })

@@ -49,8 +49,7 @@ import { withRouter } from 'react-router-dom';
                      localStorage.setItem('LogIn',reponse.data[0].username);
                     
                    this.props.history.push('/Dashboard')
-                    //window.location='/Dashboard'
-            
+                   
                     
                 } 
                 else alert('error into login');

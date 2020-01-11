@@ -89,7 +89,7 @@ export class AddStudent extends Component {
         console.log(student);
         axios.post('http://localhost:3017/students/add',student)
         .then(res=>{
-                if(res.data)  this.props.history.push('/ListEtudiant/'+this.state.nomFiliere);
+                if(res.data)  this.props.history.push('/ListEtudiant/'/*+this.state.nomFiliere*/);
         })
         .catch(err=>console.log(err));
     

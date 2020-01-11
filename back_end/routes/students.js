@@ -41,8 +41,8 @@ router.route('/listStudent/:nomFiliere').get((req,res)=>{
    .catch(err=>res.status(400).json('Error'+err));
 });
 
-router.route('/searchStudent/:q/:nomFiliere').get((req,res)=>{
-   Student.find({$or:[{'cin':req.params.q},{'cne':req.params.q},{'nom':req.params.q},{'prenom':req.params.q}]}).find({'nomFiliere':req.params.nomFiliere})
+router.route('/searchStudent/:nomFiliere').get((req,res)=>{
+   Student.find({'nomFiliere':req.params.nomFiliere})
    .then(student=>res.json(student))
    .catch(err=>res.status(400).json('Error'+err));
 });
