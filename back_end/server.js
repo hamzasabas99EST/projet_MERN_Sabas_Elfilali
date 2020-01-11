@@ -6,15 +6,18 @@ const cors = require('cors');
 const app=express();
 const path = require('path');
 
+require('dotenv').config();
+
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname,'./build')));
 
-// Connect to the db
-
-mongoose.connect('mongodb://localhost:27017/projet', {
+// Connect to the db mongodb://localhost:27017/projet
+const url   =process.env.ATLAS_URI;
+mongoose.connect(url, {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useCreateIndex:true,
 });
 const connection=mongoose.connection;
 connection.once('open',()=>{
